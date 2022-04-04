@@ -1,0 +1,113 @@
+.main {
+    background: linear-gradient(to top right, #89a2c0, #dbf4fa, #b2e0ea);
+    height: 100vh;
+    padding-top: var(--header-height);
+}
+
+.main-grid {
+    padding: 32px 32px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.main-heading {
+    font-size: 4rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: -2px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    color: #fff;
+}
+
+.main-heading span {
+    color: #e84a27;
+    font-size: 5rem;
+}
+
+.main-body {
+    display: flex;
+    align-items: center;
+}
+
+.main-left {
+    flex: 3;
+    align-self: flex-start;
+}
+
+.main-left__logo {
+    width: 360px;
+    height: 360px;
+}
+
+.main-right {
+    align-self: flex-start;
+    padding: 20px 0;
+    flex: 4;
+}
+
+.main-right__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(to right, #cde7f4, #acdbeb);
+    padding: 12px 8px;
+    border-radius: 4px;
+}
+
+.main-right__item + .main-right__item {
+    margin-top: 12px;
+}
+
+.main-right__item-avt {
+    align-self: flex-start;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    object-fit: cover;
+}
+
+.main-right__item-avt img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.main-right__item-body {
+    color: var(--text-color);
+}
+
+.main-right__item-name {
+    font-size: 2rem;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.main-right__item-text {
+    font-size: 1.4rem;
+    font-style: italic;
+    font-weight: 700;
+}
+
+.main-submit {
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 700;
+    padding: 8px 20px;
+    background: var(--text-color);
+    width: fit-content;
+    border-radius: 4px;
+    margin: 0 auto;
+    transition: all ease-in 0.25s;
+}
+
+.main-submit:hover {
+    cursor: pointer;
+    filter: brightness(0.95);
+}
