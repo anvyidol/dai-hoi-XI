@@ -1,0 +1,30 @@
+:root {
+    --header-height: 120px;
+    --footer-height: 48px;
+    --text-color: #4397d5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+}
+
+html {
+    font-size: 62.5%;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+}
+
+.grid {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+img {
+    width: 100%;
+}
