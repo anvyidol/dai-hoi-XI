@@ -54,6 +54,11 @@
                                     cols="30"
                                     rows="10"
                                 ></textarea>
+                                <div class="main-right__form-count-char">
+                                    <span class="count-char__now">0</span>
+                                    /
+                                    <span class="count-char__max">400</span>
+                                </div>
                             </div>
                             <div class="main-right__form-group">
                                 <div class="main-right__form-title">Ký tên</div>
@@ -61,6 +66,11 @@
                                     type="text"
                                     class="main-right__form-input"
                                 />
+                                <div class="main-right__form-count-char">
+                                    <span class="count-char__now">0</span>
+                                    /
+                                    <span class="count-char__max">40</span>
+                                </div>
                             </div>
                             <div class="main-right__form-submit-btn">
                                 Gửi thông điệp
@@ -79,5 +89,32 @@
                 </div>
             </footer>
         </div>
+
+        <script>
+            const $ = document.querySelector.bind(document);
+            const $$ = document.querySelectorAll.bind(document);
+
+            const inputs = $$(".main-right__form-input");
+
+            inputs.forEach((input) => {
+                input.oninput = function (e) {
+                    const span =
+                        this.parentElement.querySelector(".count-char__now");
+                    const max = parseInt(
+                        this.parentElement.querySelector(".count-char__max")
+                            .innerHTML
+                    );
+
+                    const lengthInp = input.value.length;
+                    console.log(max, lengthInp);
+
+                    if (lengthInp <= max) {
+                        span.innerHTML = lengthInp;
+                    } else {
+                        this.blur();
+                    }
+                };
+            });
+        </script>
     </body>
 </html>
