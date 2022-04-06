@@ -1,5 +1,3 @@
-
-
 /* ----------------------------------- */
 
 .main {
@@ -22,6 +20,17 @@
     width: 300px;
     height: 300px;
     border: 5px solid var(--text-color);
+    padding: 4px;
+}
+
+.main-left__wrap-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.main-left__wrap:hover {
+    cursor: pointer;
 }
 
 .main-right {

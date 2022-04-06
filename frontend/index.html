@@ -14,18 +14,16 @@
                 <div class="header-grid grid">
                     <div class="header-left">
                         <div class="header-left__img">
-                            <img
-                                src="./assets/img/LOGO-HSV-TP-HCM.png"
-                                alt=""
-                            />
+                            <img src="./assets/img/logo.webp" alt="" />
                         </div>
                     </div>
                     <div class="header-main">
                         <div class="header-main__text">
-                            Hội viên, sinh viên thành phố Hồ Chí Minh
-                            <br />nhiệt liệt chào mừng đại hội đại biểu toàn
-                            quốc hội sinh viên Việt Nam <br />
-                            lần thứ X, nhiệm kỳ 2018 - 2023
+                            ĐOÀN VIÊN THANH NIÊN KHOA CÔNG NGHỆ THÔNG TIN NHIỆT
+                            LIỆT <br />
+                            CHÀO MỪNG ĐẠI HỘI ĐẠI BIỂU ĐOÀN TNCS HỒ CHÍ MINH
+                            <br />
+                            KHOA CÔNG NGHỆ THÔNG TIN LẦN XI NHIỆM KỲ 2022 - 2024
                         </div>
                     </div>
                     <div class="header-right">
@@ -39,7 +37,10 @@
             <section class="main">
                 <div class="main-grid grid">
                     <div class="main-left">
-                        <div class="main-left__wrap"></div>
+                        <div class="main-left__wrap">
+                            <img class="main-left__wrap-img" src="" alt="" />
+                        </div>
+                        <input class="main-left__inp" type="file" hidden />
                     </div>
                     <div class="main-right">
                         <div class="main-right__form">
@@ -95,6 +96,7 @@
             const $$ = document.querySelectorAll.bind(document);
 
             const inputs = $$(".main-right__form-input");
+            const mainLeftWrap = $(".main-left__wrap");
 
             inputs.forEach((input) => {
                 input.oninput = function (e) {
@@ -115,6 +117,29 @@
                     }
                 };
             });
+
+            mainLeftWrap.onclick = function () {
+                this.parentElement.querySelector(".main-left__inp").click();
+            };
+
+            $(".main-left__inp").onchange = (e) => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onloadend = async () => {
+                    mainLeftWrap.querySelector("img").src = reader.result;
+
+                    fetch("http://localhost:8080/v1/user/upload", {
+                        method: "POST",
+                        body: reader.result,
+                    })
+                        .then((res) => res.json())
+                        .then((result) => {
+                            console.log(result);
+                        })
+                        .catch((err) => console.log(err));
+                };
+            };
         </script>
     </body>
 </html>
