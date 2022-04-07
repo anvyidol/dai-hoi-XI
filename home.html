@@ -135,9 +135,38 @@
             </footer>
         </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script>
             const $ = document.querySelector.bind(document);
             const $$ = document.querySelectorAll.bind(document);
+
+            (async () => {
+                await axios
+                    .get("http://localhost:5000/user/all-post")
+                    .then((res) => {
+                        const htmls = res.data
+                            .map((item) => {
+                                return `
+                            <div class="main-right__item">
+                                <div class="main-right__item-avt">
+                                    <img src=${item?.avt} alt="" />
+                                </div>
+                                <div class="main-right__item-body">
+                                    <div class="main-right__item-name">
+                                        ${item.name}
+                                    </div>
+                                    <div class="main-right__item-text">
+                                        ${item?.content}
+                                    </div>
+                                </div>
+                            </div>
+                            `;
+                            })
+                            .join("");
+                        $(".main-right").innerHTML = htmls;
+                    })
+                    .catch((err) => console.log(err.response.data));
+            })();
         </script>
     </body>
 </html>

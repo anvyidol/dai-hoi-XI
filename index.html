@@ -91,12 +91,18 @@
             </footer>
         </div>
 
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script>
             const $ = document.querySelector.bind(document);
             const $$ = document.querySelectorAll.bind(document);
 
+            const avtLS = JSON.parse(localStorage.getItem("avtLS")) || "";
+
             const inputs = $$(".main-right__form-input");
             const mainLeftWrap = $(".main-left__wrap");
+
+            //avt LS
+            mainLeftWrap.querySelector("img").src = avtLS;
 
             inputs.forEach((input) => {
                 input.oninput = function (e) {
@@ -108,7 +114,6 @@
                     );
 
                     const lengthInp = input.value.length;
-                    console.log(max, lengthInp);
 
                     if (lengthInp <= max) {
                         span.innerHTML = lengthInp;
@@ -127,18 +132,41 @@
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onloadend = async () => {
-                    mainLeftWrap.querySelector("img").src = reader.result;
-
-                    fetch("http://localhost:8080/v1/user/upload", {
-                        method: "POST",
-                        body: reader.result,
-                    })
-                        .then((res) => res.json())
-                        .then((result) => {
-                            console.log(result);
+                    await axios
+                        .post("http://localhost:5000/user/upload-avt", {
+                            data: reader.result,
                         })
-                        .catch((err) => console.log(err));
+                        .then((res) => {
+                            localStorage.setItem(
+                                "avtLS",
+                                JSON.stringify(res.data)
+                            );
+                            mainLeftWrap.querySelector("img").src = res.data;
+                        })
+                        .catch((err) => {
+                            console.log(err.response?.data);
+                        });
                 };
+            };
+
+            $(".main-right__form-submit-btn").onclick = async () => {
+                const avt = mainLeftWrap.querySelector("img").src;
+                const content = inputs[0].value;
+                const name = inputs[1].value;
+                if (avt && name && content) {
+                    const data = {
+                        avt,
+                        name,
+                        content,
+                    };
+                    
+                    await axios
+                        .post("http://localhost:5000/user/new-post", data)
+                        .then((res) => {
+                            window.location = "/home.html";
+                        })
+                        .catch((err) => console.log(err.response?.data));
+                }
             };
         </script>
     </body>

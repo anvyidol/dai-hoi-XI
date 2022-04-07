@@ -8,11 +8,11 @@ const userRoute = require("./routes/user");
 const user = require("./models/user");
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = 5000;
 
 app.use(cookieParser());
 dotenv.config();
-app.use(cors());
+app.use(cors({ origin: "*", optionsSuccessStatus: 200 }));
 
 app.use(
     bodyParser.json({
@@ -29,7 +29,7 @@ mongoose
         console.log(err);
     });
 
-app.use("/v1/user", userRoute);
+app.use("/user", userRoute);
 
 app.listen(PORT, (req, res) => {
     console.log("OK");
