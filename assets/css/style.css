@@ -2,8 +2,9 @@
 
 .main {
     background: linear-gradient(to top right, #89a2c0, #e8f9fc, #b2e0ea);
-    height: 100vh;
-    padding-top: var(--header-height);
+    min-height: 100vh;
+    width: 100%;
+    padding: var(--header-height) 0 var(--footer-height);
 }
 
 .main-grid {
@@ -14,13 +15,47 @@
 }
 
 .main-left {
+    flex: 3;
 }
 
 .main-left__wrap {
-    width: 300px;
-    height: 300px;
     border: 5px solid var(--text-color);
     padding: 4px;
+    position: relative;
+}
+
+.main-left__wrap .loading {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.6);
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.main-left__wrap .loading.active {
+    opacity: 1;
+}
+
+.loading span {
+    width: 60px;
+    height: 60px;
+    border: 5px solid #fff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: loading ease 1s infinite;
+}
+
+@keyframes loading {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .main-left__wrap-img {
@@ -36,7 +71,7 @@
 }
 
 .main-right {
-    flex: 1;
+    flex: 6;
 }
 
 .main-right__form {
@@ -105,6 +140,8 @@ input.main-right__form-input {
     width: fit-content;
     border-radius: 4px;
     margin: 0 auto;
+    outline: none;
+    border: none;
     transition: all ease-in 0.25s;
     user-select: none;
 }
@@ -115,3 +152,50 @@ input.main-right__form-input {
 }
 
 /* -------------------------------------- */
+
+@media (max-width: 1023px) {
+}
+
+@media (max-width: 767px) {
+    .main-grid {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .main-left {
+        width: 50%;
+    }
+
+    .main-right {
+        width: 100%;
+    }
+
+    .main-right__form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .main-right__form-group {
+        width: 100%;
+    }
+
+    .main-right__form-input {
+    }
+}
+
+@media (max-width: 500px) {
+    .main-grid {
+        width: 100%;
+        padding: 12px 4px;
+    }
+
+    .main-right {
+        width: 100%;
+    }
+
+    .main-right__form-input {
+        width: 100%;
+    }
+}

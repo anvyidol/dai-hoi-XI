@@ -1,5 +1,5 @@
 const route = require("express").Router();
-const userController = require("../controllers/UserControllers");
+const userController = require("../controllers/PostControllers");
 
 route.post("/upload-avt", userController.uploadAvt);
 route.post("/new-post", userController.newPost);

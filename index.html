@@ -5,6 +5,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
+        <link
+            rel="shortcut icon"
+            href="./assets/img/LOG-XI.png"
+            type="image/x-icon"
+        />
         <link rel="stylesheet" href="./assets/css/base.css" />
         <link rel="stylesheet" href="./assets/css/style.css" />
     </head>
@@ -20,11 +25,16 @@
                     <div class="header-main">
                         <div class="header-main__text">
                             ĐOÀN VIÊN THANH NIÊN KHOA CÔNG NGHỆ THÔNG TIN NHIỆT
-                            LIỆT <br />
-                            CHÀO MỪNG ĐẠI HỘI ĐẠI BIỂU ĐOÀN TNCS HỒ CHÍ MINH
-                            <br />
-                            KHOA CÔNG NGHỆ THÔNG TIN LẦN XI NHIỆM KỲ 2022 - 2024
+                            LIỆT CHÀO MỪNG ĐẠI HỘI ĐẠI BIỂU ĐOÀN TNCS HỒ CHÍ
+                            MINH KHOA CÔNG NGHỆ THÔNG TIN LẦN XI NHIỆM KỲ 2022 -
+                            2024
                         </div>
+                        <marquee class="header-main__text--marquee">
+                            ĐOÀN VIÊN THANH NIÊN KHOA CÔNG NGHỆ THÔNG TIN NHIỆT
+                            LIỆT CHÀO MỪNG ĐẠI HỘI ĐẠI BIỂU ĐOÀN TNCS HỒ CHÍ
+                            MINH KHOA CÔNG NGHỆ THÔNG TIN LẦN XI NHIỆM KỲ 2022 -
+                            2024
+                        </marquee>
                     </div>
                     <div class="header-right">
                         <div class="header-right__img">
@@ -38,17 +48,23 @@
                 <div class="main-grid grid">
                     <div class="main-left">
                         <div class="main-left__wrap">
-                            <img class="main-left__wrap-img" src="" alt="" />
+                            <img
+                                class="main-left__wrap-img"
+                                src=""
+                                alt="Hmmm, I think it can a your picture ~"
+                            />
+                            <div class="loading"><span></span></div>
                         </div>
                         <input class="main-left__inp" type="file" hidden />
                     </div>
                     <div class="main-right">
-                        <div class="main-right__form">
+                        <form class="main-right__form">
                             <div class="main-right__form-group">
                                 <div class="main-right__form-title">
                                     Thông điệp của bạn
                                 </div>
                                 <textarea
+                                    required
                                     class="main-right__form-input"
                                     name=""
                                     id=""
@@ -64,6 +80,7 @@
                             <div class="main-right__form-group">
                                 <div class="main-right__form-title">Ký tên</div>
                                 <input
+                                    required
                                     type="text"
                                     class="main-right__form-input"
                                 />
@@ -73,10 +90,13 @@
                                     <span class="count-char__max">40</span>
                                 </div>
                             </div>
-                            <div class="main-right__form-submit-btn">
+                            <button
+                                type="submit"
+                                class="main-right__form-submit-btn"
+                            >
                                 Gửi thông điệp
-                            </div>
-                        </div>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </section>
@@ -84,7 +104,7 @@
             <footer class="footer">
                 <div class="footer-grid grid">
                     <div class="footer-text">
-                        &copy; 2018 Bản quyền thuộc về hội sinh viên Việt Nam
+                        &copy; 2022 Bản quyền thuộc về hội sinh viên Việt Nam
                         thành phố Hồ Chí Minh
                     </div>
                 </div>
@@ -92,82 +112,132 @@
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="./assets/js/app.js"></script>
         <script>
-            const $ = document.querySelector.bind(document);
-            const $$ = document.querySelectorAll.bind(document);
+            const app = (() => {
+                const avtLS =
+                    JSON.parse(localStorage.getItem("avtLS")) ||
+                    "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png";
 
-            const avtLS = JSON.parse(localStorage.getItem("avtLS")) || "";
+                return {
+                    isLoading: false,
+                    handleEvent() {
+                        const _this = this;
+                        const inputs = $$(".main-right__form-input");
+                        const mainLeftWrap = $(".main-left__wrap");
+                        const loading = $(".main-left__wrap .loading");
 
-            const inputs = $$(".main-right__form-input");
-            const mainLeftWrap = $(".main-left__wrap");
+                        mainLeftWrap.querySelector("img").src = avtLS;
 
-            //avt LS
-            mainLeftWrap.querySelector("img").src = avtLS;
+                        inputs.forEach((input) => {
+                            input.oninput = function (e) {
+                                const span =
+                                    this.parentElement.querySelector(
+                                        ".count-char__now"
+                                    );
+                                const max = parseInt(
+                                    this.parentElement.querySelector(
+                                        ".count-char__max"
+                                    ).innerHTML
+                                );
 
-            inputs.forEach((input) => {
-                input.oninput = function (e) {
-                    const span =
-                        this.parentElement.querySelector(".count-char__now");
-                    const max = parseInt(
-                        this.parentElement.querySelector(".count-char__max")
-                            .innerHTML
-                    );
+                                const lengthInp = input.value.length;
 
-                    const lengthInp = input.value.length;
-
-                    if (lengthInp <= max) {
-                        span.innerHTML = lengthInp;
-                    } else {
-                        this.blur();
-                    }
-                };
-            });
-
-            mainLeftWrap.onclick = function () {
-                this.parentElement.querySelector(".main-left__inp").click();
-            };
-
-            $(".main-left__inp").onchange = (e) => {
-                const file = e.target.files[0];
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onloadend = async () => {
-                    await axios
-                        .post("http://localhost:5000/user/upload-avt", {
-                            data: reader.result,
-                        })
-                        .then((res) => {
-                            localStorage.setItem(
-                                "avtLS",
-                                JSON.stringify(res.data)
-                            );
-                            mainLeftWrap.querySelector("img").src = res.data;
-                        })
-                        .catch((err) => {
-                            console.log(err.response?.data);
+                                if (lengthInp <= max) {
+                                    span.innerHTML = lengthInp;
+                                } else {
+                                    this.blur();
+                                }
+                            };
                         });
-                };
-            };
 
-            $(".main-right__form-submit-btn").onclick = async () => {
-                const avt = mainLeftWrap.querySelector("img").src;
-                const content = inputs[0].value;
-                const name = inputs[1].value;
-                if (avt && name && content) {
-                    const data = {
-                        avt,
-                        name,
-                        content,
-                    };
-                    
-                    await axios
-                        .post("http://localhost:5000/user/new-post", data)
-                        .then((res) => {
-                            window.location = "/home.html";
-                        })
-                        .catch((err) => console.log(err.response?.data));
-                }
-            };
+                        mainLeftWrap.onclick = function () {
+                            if (!_this.isLoading) {
+                                this.parentElement
+                                    .querySelector(".main-left__inp")
+                                    .click();
+                            }
+                        };
+
+                        // loading
+                        startLoading = () => {
+                            _this.isLoading = true;
+                            loading.classList.add("active");
+                        };
+
+                        endLoading = () => {
+                            _this.isLoading = false;
+                            loading.classList.remove("active");
+                        };
+
+                        $(".main-left__inp").onchange = (e) => {
+                            startLoading();
+                            const file = e.target.files[0];
+                            if (file) {
+                                const reader = new FileReader();
+                                reader.readAsDataURL(file);
+                                reader.onloadend = async () => {
+                                    await axios
+                                        .post(
+                                            "http://localhost:5000/post/upload-avt",
+                                            {
+                                                data: reader.result,
+                                            }
+                                        )
+                                        .then((res) => {
+                                            localStorage.setItem(
+                                                "avtLS",
+                                                JSON.stringify(res.data)
+                                            );
+                                            mainLeftWrap.querySelector(
+                                                "img"
+                                            ).src = res.data;
+                                        })
+                                        .catch((err) => {
+                                            console.log(err.response?.data);
+                                        })
+                                        .finally(() => {
+                                            setTimeout(endLoading, 2000);
+                                        });
+                                };
+                            }
+                        };
+
+                        $(".main-right__form-submit-btn").onclick = async (
+                            e
+                        ) => {
+                            e.preventDefault();
+                            const avt = mainLeftWrap.querySelector("img").src;
+                            const content = inputs[0].value;
+                            const name = inputs[1].value;
+                            if (avt && name && content) {
+                                const data = {
+                                    avt,
+                                    name,
+                                    content,
+                                };
+
+                                await axios
+                                    .post(
+                                        "http://localhost:5000/post/new-post",
+                                        data
+                                    )
+                                    .then((res) => {
+                                        inputs[0].value = null;
+                                        inputs[1].value = null;
+                                        window.location = "/home.html";
+                                    })
+                                    .catch((err) =>
+                                        console.log(err.response?.data)
+                                    );
+                            }
+                        };
+                    },
+                    start() {
+                        this.handleEvent();
+                    },
+                };
+            })().start();
         </script>
     </body>
 </html>

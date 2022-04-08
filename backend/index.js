@@ -4,8 +4,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-const userRoute = require("./routes/user");
-const user = require("./models/user");
+const postRoute = require("./routes/post");
 
 const app = express();
 const PORT = 5000;
@@ -29,7 +28,7 @@ mongoose
         console.log(err);
     });
 
-app.use("/user", userRoute);
+app.use("/post", postRoute);
 
 app.listen(PORT, (req, res) => {
     console.log("OK");
