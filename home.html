@@ -78,7 +78,7 @@
         <script>
             (async () => {
                 await axios
-                    .get("http://localhost:5000/post/all-post")
+                    .get("https://dai-hoi-xi.herokuapp.com/post/all-post")
                     .then((res) => {
                         const htmls = res.data?.posts
                             .map((item) => {

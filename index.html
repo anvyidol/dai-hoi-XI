@@ -179,7 +179,7 @@
                                 reader.onloadend = async () => {
                                     await axios
                                         .post(
-                                            "http://localhost:5000/post/upload-avt",
+                                            "https://dai-hoi-xi.herokuapp.com/post/upload-avt",
                                             {
                                                 data: reader.result,
                                             }
@@ -219,7 +219,7 @@
 
                                 await axios
                                     .post(
-                                        "http://localhost:5000/post/new-post",
+                                        "https://dai-hoi-xi.herokuapp.com/post/new-post",
                                         data
                                     )
                                     .then((res) => {
